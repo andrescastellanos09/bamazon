@@ -36,7 +36,7 @@ var shoppingCart = function() {
         name: "ProductID",
         type: "input",
         message: "What is the ID of the product you would like to buy?",
-        //Validate: checks weather or not the user typed a response
+        //Validate: checks weather or not the user typed
         validate: function(value) {
             if (isNaN(value) == false) {
                 return true;
