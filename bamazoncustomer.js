@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "root",
+  password: "",
   database: "bamazon_db"
 });
 
@@ -58,17 +58,18 @@ var shoppingCart = function() {
     }]).then(function(answer) {
 
       
-        var query = 'SELECT * FROM Products WHERE item_id=' + answer.Quantity;
+        var query = 'SELECT * FROM Products WHERE item_id=' + answer.ProductID;
         
         connection.query(query, function(err, res) {
-          if (answer.Quantity <= res) {
+            console.log(res);
+          if (answer.Quantity <= res[0].stock_quantity) {
             
             for (var i = 0; i < res.length; i++) {
                 
                 var remainingProducts = res[i].stock_quantity - answer.Quantity;
-                console.log("We currently have " + res[i].stock_quantity + " " + res[i].product_name + ".");
+                console.log("We have "+remainingProducts+" "+res[i].product_name+" left.");
                 console.log("Thank you for your order! Your order of " + answer.Quantity + " " + res[i].product_name + " is now being processed.");
-                
+                console.log("Your total is $"+res[i].price)
               }
             } else {
               console.log("Not enough of this product in stock.");
